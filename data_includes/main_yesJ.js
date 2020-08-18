@@ -1,28 +1,28 @@
 PennController.ResetPrefix(null); // Initiates PennController
-PennController.DebugOff()
-    // PennController.AddHost("https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/");; // loads pictures from external server (pre-test 3 only)
-    
-    var progressBarText = "Verbleibend"; //Changes the text of the progress bar
+//PennController.DebugOff()
+// PennController.AddHost("https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/");; // loads pictures from external server (pre-test 3 only)
+
+var progressBarText = "Verbleibend"; //Changes the text of the progress bar
 
 /* To run this script, you need...
 1. to have Subsequence.js in your js_includes and global_z.css in your css_includes
 2. the right list .csv file in PennController.Template
 3. the right yes key (F or J) in place of X in: .log("yes_key", variable.yes_X) and the right Instructions as to which key means 'Yes' and 'No' in:
-   -PC 2. 2. Intro/instructions
-     -newText("intro_instructions3
-   -PC 3. instructions_example_name2
-     -.test.pressed("X")
-     -instructions_example_year2
-     -instructions_example_fact2
-     -.log( "yes_key" , variable.yes_X)
-   -PC 4. Instructions before experiment
-     -intro_experiment2
-     -newKey("continue", "X")
-   -Pc 5. Experimental trials
-     -.test.pressed("X")
-     -.log( "yes_key" , variable.yes_X)
-   -PC  6. Break
-     -newKey("continue_Ja", "X")
+-PC 2. 2. Intro/instructions
+-newText("intro_instructions3
+-PC 3. instructions_example_name2
+-.test.pressed("X")
+-instructions_example_year2
+-instructions_example_fact2
+-.log( "yes_key" , variable.yes_X)
+-PC 4. Instructions before experiment
+-intro_experiment2
+-newKey("continue", "X")
+-Pc 5. Experimental trials
+-.test.pressed("X")
+-.log( "yes_key" , variable.yes_X)
+-PC  6. Break
+-newKey("continue_Ja", "X")
 4. the right column names depending on list in the Recollection Task
 */
 
@@ -30,7 +30,9 @@ PennController.DebugOff()
 
 // Establish sequence, with randomised items
 // shuffle(randomize("real"), randomize("filler"))
-PennController.Sequence("demographics", "instructions1", "practice_trials", "instructions2", subsequence(repeat(randomize("critical_trials"), 2) , "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
+PennController.Sequence("demographics", "instructions1", "practice_trials", "instructions2", subsequence(repeat(randomize("critical_trials"), 40) , "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
+
+
 //PennController.Sequence( "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
 
 //====================================================================================================================================================================================================================
@@ -481,6 +483,9 @@ PennController. Template( PennController.GetTable( "practice.csv"),
                           .log( "life_mismatch" , variable.life_mismatch)
                           .log( "fact_mismatch" , variable.fact_mismatch)
                           .log( "list" , variable.list)
+                          //F-Version:
+                          //.log( "yes_key" , variable.yes_F)
+                          //J-Version:
                           .log( "yes_key" , variable.yes_J)
                           .log( "occupation" , variable.occupation)
                           
@@ -555,8 +560,11 @@ PennController( "instructions2" ,
 //====================================================================================================================================================================================================================
 // 5. Experimental trials
 
-PennController.Template( PennController.GetTable( "stimuli.csv"),  // change this line for the appropriate experimental list
-                         variable => PennController( "critical_trials",
+PennController.Template( PennController.GetTable( "stimuli.csv")// change this line for the appropriate experimental list
+                         .filter("type" , "critical")
+                         ,  
+                         variable => PennController( "critical_trials"
+                                                     ,
                                                      newText("question1", variable.name)
                                                      .settings.css("font-size", "25px")
                                                      .settings.center()
@@ -584,7 +592,6 @@ PennController.Template( PennController.GetTable( "stimuli.csv"),  // change thi
                                                      .test.pressed("J")
                                                      .success
                                                      (  
-                                                         
                                                          newText("question2","Am Leben?" )
                                                          .settings.css("font-size", "25px")
                                                          .settings.center()
@@ -593,9 +600,10 @@ PennController.Template( PennController.GetTable( "stimuli.csv"),  // change thi
                                                          newTimer("delay6", 200)
                                                          .start()
                                                          .wait()
-                                                         ,                                                         
+                                                         ,  
                                                          newKey("question_alive", "FJ")
-                                                         .callback( getTimer("time_out4").stop() )
+                                                         .callback( getTimer("time_out4")
+                                                                    .stop() )
                                                          .log("all")  
                                                          ,
                                                          newTimer("time_out4", 5000)
@@ -607,7 +615,7 @@ PennController.Template( PennController.GetTable( "stimuli.csv"),  // change thi
                                                          .remove()
                                                          ,  
                                                          getKey("question_alive")
-                                                         .remove()                                   
+                                                         .disable()
                                                          ,                         
                                                          newText("question3", variable.year)
                                                          .settings.css("font-size", "25px")
@@ -631,7 +639,7 @@ PennController.Template( PennController.GetTable( "stimuli.csv"),  // change thi
                                                          .remove()
                                                          ,  
                                                          getKey("question_year")
-                                                         .remove()
+                                                         .disable()
                                                          ,                         
                                                          newText("question4", variable.fact)
                                                          .settings.css("font-size", "25px")
@@ -655,7 +663,7 @@ PennController.Template( PennController.GetTable( "stimuli.csv"),  // change thi
                                                          .remove()
                                                          ,  
                                                          getKey("question_fact")
-                                                         .remove()
+                                                         .disable()
                                                          ,                             
                                                          newText("pleasewait", "...")
                                                          .settings.css("font-size", "25px")
@@ -701,8 +709,12 @@ PennController.Template( PennController.GetTable( "stimuli.csv"),  // change thi
                          .log( "fact_mismatch" , variable.fact_mismatch)
                          .log( "list" , variable.list)
                          .log( "life_status" , variable.life_status)
+                         //F-Version:
+                         //.log( "yes_key" , variable.yes_F)
+                         //J-Version:
                          .log( "yes_key" , variable.yes_J)
-                         .log( "occupation" , variable.occupation)         
+                         .log( "occupation" , variable.occupation)
+                         
                          .log("age", getVar("IDage"))
                          .log("sex", getVar("IDsex"))
                          .log("L2", getVar("IDling"))
@@ -788,65 +800,71 @@ PennController( "post-task-intro",
 
 var names = [];
 var test;
-function handleNames(row){
-   if (row.name=="void"){
-     names = names.sort(v=>1-2*(Math.random()>=0.5));
-     return newTrial("post-task",             newText("instructions", "<p>Bitte w&auml;hlen Sie diejenigen Namen aus,die w&auml;hrend des Experiments vorgekommen sind. <br> W&auml;hlen Sie hierf&uuml;r jeweils das linke K&auml;stchen f&uuml;r <b>Ja</b> bzw. das rechte K&auml;stchen f&uuml;r <b>Nein</b> aus.<p><p><b> Sie k&ouml;nnen das Experiment nur dann beenden, wenn Sie f&uuml;r alle Namen eine Auswahl getroffen haben.</b><p>")
-             .settings.center()
-             .settings.css("font-size", "20px")
-             ,
-             newCanvas("screen", 1500, 450)
-             .add(350, 100, getText("instructions")) // leftmost ja/nein
-             .add(285, 245, newText("Ja / Nein")) // leftmost ja/nein
-             .add(650 , 245, newText("Ja / Nein")) // center ja/nein
-             .add(990, 245, newText("Ja / Nein")) // rightmost ja/nein
-             // names
-             .add(250, 170 , newCanvas("names-1", "60%", "100%") ) // leftmost column
-             .add( 620, 170, newCanvas("names-2", "60%", "100%") ) // center column
-             .add( 960, 170 , newCanvas("names-3", "60%", "100%") ) // rightmost column
-             .print( "font-size", "20px")
-             ,
-             ...names.map( (r,i) => {
-               test = test || newFunction(v=>true).test.is(true);
-               test = test.and( getScale(r.name+'-scale-'+r.match+', life ='+r.life+'list ='+r.which_list).test.selected() );
-               return newText(r.name)
-               .before(
-               newScale(r.name+'-scale-'+r.match+', life ='+r.life+'list ='+r.which_list, "yes", "no") //global_z.css is needed to hide the lables "yes" & "no"
-               .log()
-               .print()
-               )
-               .print( "2em" , parseInt(6+(i%17)*2)+"em" , getCanvas("names-"+parseInt(1+i/17)) );
-             })
-               ,              
-               newButton("continueb", "Experiment beenden")
-               .print(640, 870)
-               .wait(test)    //  would only proceed if all Scale elements are selected    
-               )                           }
-               names.push(row);
-               return [];
-             }
-               Template( "post-task.csv", row => handleNames(row) );
-
-//====================================================================================================================================================================================================================
-// 9. Send results
-
-PennController.SendResults( "send" )
-    
-    .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
-    .setOption("hideProgressBar", true);
-
-//====================================================================================================================================================================================================================
-// 10. Good-bye
-
-PennController( "final" ,
-                newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme an unserem Experiment!<p><br><b>Hier ist Ihr Validierungscode: CwDfgEx102</b><br><p>Bitte geben Sie diesen Code auf der Clickworker-Webseite ein, um Ihre Bezahlung zu erhalten.</p>")
-                .settings.css("font-size", "20px")
-                .settings.center()
-                .print()
-                ,
-                newButton("void")
-                .wait()
-               )
-    
-    .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
-    .setOption("hideProgressBar", true)
+function handleNames(row){close
+    if (row.name=="void"){
+    names = names.sort(v=>1-2*(Math.random()>=0.5));
+                          return newTrial("post-task",             newText("instructions", "<p>Bitte w&auml;hlen Sie diejenigen Namen aus,die w&auml;hrend des Experiments vorgekommen sind. <br> W&auml;hlen Sie hierf&uuml;r jeweils das linke K&auml;stchen f&uuml;r <b>Ja</b> bzw. das rechte K&auml;stchen f&uuml;r <b>Nein</b> aus.<p><p><b> Sie k&ouml;nnen das Experiment nur dann beenden, wenn Sie f&uuml;r alle Namen eine Auswahl getroffen haben.</b><p>")
+                                          .settings.center()
+                                          .settings.css("font-size", "20px")
+                                          ,
+                                          newCanvas("screen", 1500, 450)
+                                          .add(350, 100, getText("instructions")) // leftmost ja/nein
+                                          .add(285, 245, newText("Ja / Nein")) // leftmost ja/nein
+                                          .add(650 , 245, newText("Ja / Nein")) // center ja/nein
+                                          .add(990, 245, newText("Ja / Nein")) // rightmost ja/nein
+                                          // names
+                                          .add(250, 170 , newCanvas("names-1", "60%", "100%") ) // leftmost column
+                                          .add( 620, 170, newCanvas("names-2", "60%", "100%") ) // center column
+                                          .add( 960, 170 , newCanvas("names-3", "60%", "100%") ) // rightmost column
+                                          .print( "font-size", "20px")
+                                          ,
+                                          ...names.map( (r,i) => {
+                                              test = test || newFunction(v=>true).test.is(true);
+                                              test = test.and( getScale(r.name+'-scale-'+r.condition+', life ='+r.life_status+'list ='+r.list+' type = '+r.type).test.selected() );
+                                              return newText(r.name)
+                                              .before(
+                                              newScale(r.name+'-scale-'+r.condition+', life ='+r.life_status+'list ='+r.list+' type = '+r.type, "yes", "no") //global_z.css is needed to hide the lables "yes" & "no"
+                                              .log()
+                                              .print()
+                                              )
+                                              .print( "2em" , parseInt(6+(i%17)*2)+"em" , getCanvas("names-"+parseInt(1+i/17)) );
+                                          })
+                                              ,              
+                                              newButton("continueb", "Experiment beenden")
+                                              .print(640, 870)
+                                              .wait(test)    //  would only proceed if all Scale elements are selected    
+                                              )                           }
+                                              names.push(row);
+                                              return [];
+                                          }
+                                              Template( GetTable("stimuli.csv") .filter("type" , "post-task"),  row => handleNames(row) );
+                                              
+                                              
+                                              //====================================================================================================================================================================================================================
+                                              // 9. Send results
+                                              
+                                              PennController.SendResults( "send" )
+                                              
+                                              .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
+                                              .setOption("hideProgressBar", true);
+                                              
+                                              //====================================================================================================================================================================================================================
+                                              // 10. Good-bye
+                                              
+                                              PennController.Template(PennController.GetTable( "stimuli.csv")// change this line for the appropriate experimental list
+                                              .filter("type" , "val_code")
+                                              ,  
+                                              variable => PennController( "final"
+                                              ,
+                                              newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme an unserem Experiment!<p><br><b>Hier ist Ihr Validierungscode: "+variable.name+"J.</b><br><p>Bitte geben Sie diesen Code auf der Clickworker-Webseite ein, um Ihre Bezahlung zu erhalten.</p>")
+                                              .settings.css("font-size", "20px")
+                                              .settings.center()
+                                              .print()
+                                              ,
+                                              newButton("void")
+                                              .wait()
+                                              )
+                                              
+                                              .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
+                                              .setOption("hideProgressBar", true)
+                                              );
