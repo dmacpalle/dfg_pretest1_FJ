@@ -30,8 +30,8 @@ var progressBarText = "Verbleibend"; //Changes the text of the progress bar
 
 // Establish sequence, with randomised items
 // shuffle(randomize("real"), randomize("filler"))
-//PennController.Sequence("demographics", "instructions1", "practice_trials", "instructions2", subsequence(repeat(randomize("critical_trials"), 40) , "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
-PennController.Sequence("instructions2", subsequence(repeat(randomize("critical_trials"), 2), "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
+PennController.Sequence("demographics", "instructions1", "practice_trials", "instructions2", subsequence(repeat(randomize("critical_trials"), 40) , "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
+
 
 //PennController.Sequence( "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
 
