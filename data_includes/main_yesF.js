@@ -842,18 +842,23 @@
                                                 .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
                                                 .setOption("hideProgressBar", true);
 
-                                                //====================================================================================================================================================================================================================
-                                                // 10. Good-bye
-
-                                                PennController( "final" ,
-                                                newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme an unserem Experiment!<p><br><b>Hier ist Ihr Validierungscode: CwDfgEx101</b><br><p>Bitte geben Sie diesen Code auf der Clickworker-Webseite ein, um Ihre Bezahlung zu erhalten.</p>")
-                                                .settings.css("font-size", "20px")
-                                                .settings.center()
-                                                .print()
-                                                ,
-                                                newButton("void")
-                                                .wait()
-                                                )
-
-                                                .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
-                                                .setOption("hideProgressBar", true)
+                                               //====================================================================================================================================================================================================================
+                                              // 10. Good-bye
+                                              
+                                              PennController.Template(PennController.GetTable( "stimuli.csv")// change this line for the appropriate experimental list
+                                              .filter("type" , "val_code")
+                                              ,  
+                                              variable => PennController( "final"
+                                              ,
+                                              newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme an unserem Experiment!<p><br><b>Hier ist Ihr Validierungscode: "+variable.name+"F.</b><br><p>Bitte geben Sie diesen Code auf der Clickworker-Webseite ein, um Ihre Bezahlung zu erhalten.</p>")
+                                              .settings.css("font-size", "20px")
+                                              .settings.center()
+                                              .print()
+                                              ,
+                                              newButton("void")
+                                              .wait()
+                                              )
+                                              
+                                              .setOption("countsForProgressBar", false)    //overrides some default settings, such as countsForProgressBar
+                                              .setOption("hideProgressBar", true)
+                                              );
