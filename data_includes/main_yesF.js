@@ -23,7 +23,7 @@
   -.log( "yes_key" , variable.yes_X)
   -PC  6. Break
   -newKey("continue_Ja", "X")
-  4. the right column names depending on list in the Recollection Task
+    4. the letter 'F' to 'J' after 'variable.name' in the "final" text for the validation code
   */
 
   // Start typing your code here
