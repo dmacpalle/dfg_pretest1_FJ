@@ -8,7 +8,7 @@ var progressBarText = "Verbleibend"; //Changes the text of the progress bar
 1. to have Subsequence.js in your js_includes and global_z.css in your css_includes
 2. the right list .csv file in PennController.Template
 3. the right yes key (F or J) in place of X in: .log("yes_key", variable.yes_X) and the right Instructions as to which key means 'Yes' and 'No' in:
--PC 2. 2. Intro/instructions
+  -PC 2. 2. Intro/instructions
 -newText("intro_instructions3
 -PC 3. instructions_example_name2
 -.test.pressed("X")
@@ -23,14 +23,14 @@ var progressBarText = "Verbleibend"; //Changes the text of the progress bar
 -.log( "yes_key" , variable.yes_X)
 -PC  6. Break
 -newKey("continue_Ja", "X")
-  4. the letter 'F' to 'J' after 'variable.name' in the "final" text for the validation code
+4. the letter 'F' to 'J' after 'variable.name' in the "final" text for the validation code
 */
 
 // Start typing your code here
 
 // Establish sequence, with randomised items
 // shuffle(randomize("real"), randomize("filler"))
-PennController.Sequence("demographics", "instructions1", "practice_trials", "instructions2", subsequence(repeat(randomize("critical_trials"), 40) , "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
+PennController.Sequence("demographics", "instructions1", "practice_trials", "instructions2", subsequence(repeat(randomize("critical_trials"), 2) , "break"), "post-task-intro", "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
 
 
 //PennController.Sequence( "post-task", "send" , "final" ); // Subsequence.js is needed to run this line
@@ -179,7 +179,23 @@ PennController("demographics",
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("IDund zwar"))
+    .log("whichL2", getVar("IDund zwar")) 
+    .log( "item" , "demo" )
+    .log( "type" , "demo" )              
+    .log( "version" , "demo")
+    .log( "letter" , "demo")
+    .log( "sentence" , "demo")
+    .log( "name" , "demo")  
+    .log( "year" , "demo")
+    .log( "fact" , "demo")
+    .log( "full_sentence" , "demo")
+    .log( "condition" , "demo")
+    .log( "life_mismatch" , "demo")
+    .log( "fact_mismatch" , "demo")
+    .log( "list" , "demo")
+    .log( "life_status" , "demo")
+    .log( "yes_key" , "demo")
+    .log( "occupation" , "demo") 
     
     .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
     .setOption("hideProgressBar", true);        //end of welcome screen
@@ -235,9 +251,29 @@ PennController( "instructions1" ,
                 .print()
                 .wait()
                )
+     .log("age", getVar("IDage"))
+    .log("sex", getVar("IDsex"))
+    .log("L2", getVar("IDling"))
+    .log("whichL2", getVar("IDund zwar")) 
+    .log( "item" , "instructions" )
+    .log( "type" , "instructions" )              
+    .log( "version" , "instructions")
+    .log( "letter" , "instructions")
+    .log( "sentence" , "instructions")
+    .log( "name" , "instructions")  
+    .log( "year" , "instructions")
+    .log( "fact" , "instructions")
+    .log( "full_sentence" , "instructions")
+    .log( "condition" , "instructions")
+    .log( "life_mismatch" , "instructions")
+    .log( "fact_mismatch" , "instructions")
+    .log( "list" , "instructions")
+    .log( "life_status" , "instructions")
+    .log( "yes_key" , "instructions")
+    .log( "occupation" , "instructions") 
     
     .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
-    .setOption("hideProgressBar", true);
+      .setOption("hideProgressBar", true);
 
 //====================================================================================================================================================================================================================
 // 3. Practice round
@@ -257,7 +293,7 @@ PennController. Template( PennController.GetTable( "practice.csv"),
                                                       .print()
                                                       ,
                                                       // F-Version:  
-                                                      //newText ("instructions_example_name2"," <p><b>links = 'Ja' / rechts = 'Nein'</b><p>")
+                                                      // newText ("instructions_example_name2"," <p><b>links = 'Ja' / rechts = 'Nein'</b><p>")
                                                       //J-Version:
                                                       newText ("instructions_example_name2"," <p><b>links = 'Nein' / rechts = 'Ja'</b><p>")
                                                       .settings.css("font-size", "20px")
@@ -305,7 +341,7 @@ PennController. Template( PennController.GetTable( "practice.csv"),
                                                           .print()                                                    
                                                           ,
                                                           //F-Version:  
-                                                          //newText ("instructions_example_alive2", "<br><p><b>links = 'Ja' / rechts = 'Nein'</b><p>")  
+                                                          // newText ("instructions_example_alive2", "<br><p><b>links = 'Ja' / rechts = 'Nein'</b><p>")  
                                                           //J-Version:
                                                           newText ("instructions_example_alive2", "<br><p><b>links = 'Nein' / rechts = 'Ja'</b><p>")  
                                                           .settings.css("font-size", "20px")
@@ -350,7 +386,7 @@ PennController. Template( PennController.GetTable( "practice.csv"),
                                                           .print()  
                                                           ,
                                                           //F-Version:
-                                                          //newText ("instructions_example_year2", "<br><p><b>links = 'Ja' / rechts = 'Nein'</b><p>")  
+                                                          // newText ("instructions_example_year2", "<br><p><b>links = 'Ja' / rechts = 'Nein'</b><p>")  
                                                           //J-Version:
                                                           newText ("instructions_example_year2", "<br><p><b>links = 'Nein' / rechts = 'Ja'</b><p>")  
                                                           .settings.css("font-size", "20px")
@@ -470,33 +506,31 @@ PennController. Template( PennController.GetTable( "practice.csv"),
                                                           .remove()  
                                                           
                                                       ))                            
-                          .log( "item" , variable.item )
-                          .log( "type" , variable.type )              // 20.04.2020 DP changed from "pratice_trial" to "type"
-                          .log( "version" , variable.version)
-                          .log( "letter" , variable.letter)
-                          .log( "sentence" , variable.sentence)
-                          .log( "name" , variable.name)  
-                          .log( "year" , variable.year)
-                          .log( "fact" , variable.fact)
-                          .log( "full_sentence" , variable.full_sentence)
-                          .log( "condition" , variable.condition)
-                          .log( "life_mismatch" , variable.life_mismatch)
-                          .log( "fact_mismatch" , variable.fact_mismatch)
-                          .log( "list" , variable.list)
-                          //F-Version:
-                          //.log( "yes_key" , variable.yes_F)
-                          //J-Version:
-                          .log( "yes_key" , variable.yes_J)
-                          .log( "occupation" , variable.occupation)
-                          
                           .log("age", getVar("IDage"))
                           .log("sex", getVar("IDsex"))
                           .log("L2", getVar("IDling"))
-                          .log("whichL2", getVar("IDund zwar"))
+                          .log("whichL2", getVar("IDund zwar")) 
+                          .log( "item" , "practice" )
+                          .log( "type" , "practice" )              
+                          .log( "version" , "practice")
+                          .log( "letter" , "practice")
+                          .log( "sentence" , "practice")
+                          .log( "name" , "practice")  
+                          .log( "year" , "practice")
+                          .log( "fact" , "practice")
+                          .log( "full_sentence" , "practice")
+                          .log( "condition" , "practice")
+                          .log( "life_mismatch" , "practice")
+                          .log( "fact_mismatch" , "practice")
+                          .log( "list" , "practice")
+                          .log( "life_status" , "practice")
+                          .log( "yes_key" , "practice")
+                          .log( "occupation" , "practice")
+                          
                           
                           .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
-                          .setOption("hideProgressBar", true)
-                         );
+    .setOption("hideProgressBar", true)
+    );
 
 //====================================================================================================================================================================================================================
 // 4. Instructions before experiment
@@ -553,6 +587,27 @@ PennController( "instructions2" ,
                 .start()
                 .wait()
                )                                //end of experiment instructions screen  
+    
+        .log("age", getVar("IDage"))
+    .log("sex", getVar("IDsex"))
+    .log("L2", getVar("IDling"))
+    .log("whichL2", getVar("IDund zwar")) 
+    .log( "item" , "instructions" )
+    .log( "type" , "instructions" )              
+    .log( "version" , "instructions")
+    .log( "letter" , "instructions")
+    .log( "sentence" , "instructions")
+    .log( "name" , "instructions")  
+    .log( "year" , "instructions")
+    .log( "fact" , "instructions")
+    .log( "full_sentence" , "instructions")
+    .log( "condition" , "instructions")
+    .log( "life_mismatch" , "instructions")
+    .log( "fact_mismatch" , "instructions")
+    .log( "list" , "instructions")
+    .log( "life_status" , "instructions")
+    .log( "yes_key" , "instructions")
+    .log( "occupation" , "instructions") 
     
     .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
     .setOption("hideProgressBar", true);  
@@ -695,8 +750,12 @@ PennController.Template( PennController.GetTable( "stimuli.csv")// change this l
                                                          getText("pleasewait2")
                                                          .remove()                                                          
                                                      ))                            
+                         .log("age", getVar("IDage"))
+                         .log("sex", getVar("IDsex"))
+                         .log("L2", getVar("IDling"))
+                         .log("whichL2", getVar("IDund zwar")) 
                          .log( "item" , variable.item )
-                         .log( "type" , variable.type )              // 20.04.2020 DP changed from "pratice_trial" to "type"
+                         .log( "type" , variable.type )              
                          .log( "version" , variable.version)
                          .log( "letter" , variable.letter)
                          .log( "sentence" , variable.sentence)
@@ -709,16 +768,9 @@ PennController.Template( PennController.GetTable( "stimuli.csv")// change this l
                          .log( "fact_mismatch" , variable.fact_mismatch)
                          .log( "list" , variable.list)
                          .log( "life_status" , variable.life_status)
-                         //F-Version:
-                         //.log( "yes_key" , variable.yes_F)
-                         //J-Version:
                          .log( "yes_key" , variable.yes_J)
-                         .log( "occupation" , variable.occupation)
+                         .log( "occupation" , variable.occupation)         
                          
-                         .log("age", getVar("IDage"))
-                         .log("sex", getVar("IDsex"))
-                         .log("L2", getVar("IDling"))
-                         .log("whichL2", getVar("IDund zwar"))
                         );
 
 //====================================================================================================================================================================================================================
@@ -763,6 +815,26 @@ PennController( "break" ,
                 .start()
                 .wait()             
                )    
+        .log("age", getVar("IDage"))
+    .log("sex", getVar("IDsex"))
+    .log("L2", getVar("IDling"))
+    .log("whichL2", getVar("IDund zwar")) 
+    .log( "item" , "break" )
+    .log( "type" , "break" )              
+    .log( "version" , "break")
+    .log( "letter" , "break")
+    .log( "sentence" , "break")
+    .log( "name" , "break")  
+    .log( "year" , "break")
+    .log( "fact" , "break")
+    .log( "full_sentence" , "break")
+    .log( "condition" , "break")
+    .log( "life_mismatch" , "break")
+    .log( "fact_mismatch" , "break")
+    .log( "list" , "break")
+    .log( "life_status" , "break")
+    .log( "yes_key" , "break")
+    .log( "occupation" , "break") 
     
     .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
     .setOption("hideProgressBar", true);
@@ -791,6 +863,27 @@ PennController( "post-task-intro",
                 .print()
                 .wait()
                )
+        
+        .log("age", getVar("IDage"))
+    .log("sex", getVar("IDsex"))
+    .log("L2", getVar("IDling"))
+    .log("whichL2", getVar("IDund zwar")) 
+    .log( "item" , "instructions" )
+    .log( "type" , "instructions" )              
+    .log( "version" , "instructions")
+    .log( "letter" , "instructions")
+    .log( "sentence" , "instructions")
+    .log( "name" , "instructions")  
+    .log( "year" , "instructions")
+    .log( "fact" , "instructions")
+    .log( "full_sentence" , "instructions")
+    .log( "condition" , "instructions")
+    .log( "life_mismatch" , "instructions")
+    .log( "fact_mismatch" , "instructions")
+    .log( "list" , "instructions")
+    .log( "life_status" , "instructions")
+    .log( "yes_key" , "instructions")
+    .log( "occupation" , "instructions") 
     
     .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
     .setOption("hideProgressBar", true);
@@ -838,7 +931,8 @@ function handleNames(row){close
                                               return [];
                                           }
                                               Template( GetTable("stimuli.csv") .filter("type" , "post-task"),  row => handleNames(row) );
-                                              
+                                                  
+        
                                               
                                               //====================================================================================================================================================================================================================
                                               // 9. Send results
@@ -856,6 +950,9 @@ function handleNames(row){close
                                               ,  
                                               variable => PennController( "final"
                                               ,
+                                              // F-version
+                                              //newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme an unserem Experiment!<p><br><b>Hier ist Ihr Validierungscode: "+variable.name+"F.</b><br><p>Bitte geben Sie diesen Code auf der Clickworker-Webseite ein, um Ihre Bezahlung zu erhalten.</p>")
+                                              // J-version
                                               newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme an unserem Experiment!<p><br><b>Hier ist Ihr Validierungscode: "+variable.name+"J.</b><br><p>Bitte geben Sie diesen Code auf der Clickworker-Webseite ein, um Ihre Bezahlung zu erhalten.</p>")
                                               .settings.css("font-size", "20px")
                                               .settings.center()
